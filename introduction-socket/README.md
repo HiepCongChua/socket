@@ -1,4 +1,4 @@
-# socket
+* Cơ bản về giao thức mạng máy tính
 - Internet đơn giản chỉ là một mạng lưới giúp các máy tính có khả năng giao tiếp với nhau
 và các máy tính giao tiếp với nhau bằng các packet
 VD: Browser giao tiếp vs Server, Browser gửi và nhận dữ liệu đến server, dữ liệu ở dạng các packet, mỗi packet được chia ra làm 5 lớp theo thứ tự sau từ trên xuống dưới
@@ -16,42 +16,54 @@ Khi chúng ta ở Client (browser) browser cũng là một chương trình nó c
 + destination port
 + Source port
 
-* Ở lớp transport sẽ có 2 giao thức khác nhau là UDP và TCP
-
-+ UDP rất nhẹ, khoảng 8 byte cho tiêu đề
+* Chi tiết về lớp transport trong package
+- Ở lớp transport sẽ có 2 giao thức khác nhau là UDP và TCP
+- Phân biệt UDP và TCP, ưu nhược điểm của 2 loại giao thức
+=> UDP rất nhẹ, khoảng 8 byte cho tiêu đề (header)
    + Nếu bạn sử dụng UDP bạn không cần phải kết nối confirm trước (xác nhận xem máy tính kia có muốn kết nối hay không) mà chúng ta có thể thực hiện kết nối với một máy tính khác ngay lập tức, có thể máy tính kia không cho phép kết nối cũng ko sao, đây thực sự là một lợi thế rất lớn
    + Nhưng UDP có nhược điểm, UDP dew care nếu packet bị thất lạc, nó sẽ tiếp tục gửi các packet, nếu như mạng bị tắc nghẽn ?? UDP đéo care nó vẫn cứ tiếp tục gửi các package 
    => UDP  nhanh (vì nó nhẹ và nó không cần thiết lập kết nối ban đầu rồi mới gửi request) nhưng nó có một vài nhược điểm
    => UDP thường được sử dụng trong video game, trò chơi real time
 
-+ TCP không giống UDP, nó cần máy đích xác nhận xem có muốn kết nối hay không dựa trên 3 bước.
-   + Client gửi request yêu cầu kết nối đến server
-   + Server tiếp nhận gửi trả yêu cầu (đồng ý kết nối hoặc không)
-   + Client nhận được kết quả từ server từ đó mới tiếp tục gửi request
-=> TCP cũng có deliverry check tức là kiểm tra xem máy đích đã nhận được package hay chưa, nếu bên máy đích báo chưa nhận được thì máy gửi sẽ gửi lại
+=> TCP không giống UDP, nó cần máy đích xác nhận xem có muốn kết nối hay không dựa trên 3 bước.
+   - Client gửi request yêu cầu kết nối đến server
+   - Server tiếp nhận gửi trả yêu cầu (đồng ý kết nối hoặc không)
+   - Client nhận được kết quả từ server từ đó mới tiếp tục gửi request
++ TCP cũng có deliverry check tức là kiểm tra xem máy đích đã nhận được package hay chưa, nếu bên máy đích báo chưa nhận được thì máy gửi sẽ gửi lại
 => Với TCP Bạn cũng thể đảm bảo các package được gửi đúng thứ tự bất kể điều gì xảy ra vs mạng
 => Nếu việc nghẽn mạng xảy ra TCP có thể giữ cho việc thất lạc pakage giảm thiểu tối đa
 
-Kết luận 
+=> Kết luận 
 => TCP : tin cập nhưng chậm (HTTP và SocketIO sử dụng giao thức TCP)
 => UDP : nhanh nhưng thiếu sự tin cậy
 * Phân biệt TCP và HTTP : 
-+ TCP hoạt động ở tầng transport trong khi HTTP hoạt động ở tầng Application
++ Nói ngắn gọn TCP là giao thức tầng transport, HTTP là giao thức tầng application hoạt động dựa trên TCP, TCP như bên trên đã nói nó cung cấp một đường ống an toàn mà gói tin có thể chuyển phát giữa 2 máy tính một cách toàn vẹn và bảo mật.
 + Điều này có nghĩa chúng là 2 khái niệm hoàn toàn độc lập với nhau nhưng HTTP sẽ hoạt động dựa trên TCP , 
-+ TCP chịu trách nhiệm thiết lập kết nối giữa 2 máy tính.
++ TCP chịu trách nhiệm thiết lập kết nối giữa 2 máy tính
 + HTTP chịu trách nhiệm giúp 2 máy tính giao tiếp với nhau dựa trên kết nối đó
 + Hệ thống phân giải tên miền DNS => TCP handshake => HTTP connecting.  
-
- Websocket sử dụng TCP nó là web native technologhy dựa trên javascript, nó cho phép kết nối tới server thông qua TCP , HTTP nữa có thể hiểu đơn giản HTTP và WebSocket là những giao thức giúp 2 máy tính giao tiếp với nhau dựa trên TCP.
-
- + SocketIO giúp chúng ta làm việc với Websocket dễ dàng hơn, có thể hiểu đơn giản Websocket như javascript và SocketIO như Jquery
+Websocket sử dụng TCP nó là web native technologhy dựa trên javascript, nó cho phép kết nối tới server thông qua TCP , HTTP nữa có thể hiểu đơn giản HTTP và WebSocket là những giao thức giúp 2 máy tính giao tiếp với nhau dựa trên TCP.
 
 
-* Socket là gì ?
-=> Cần phân biệt socket với websocket?
+
+
+=> Socket là gì ?
+* Cần phân biệt socket với websocket?
 + Socket đơn giản chỉ là một đường ống giúp dữ liệu đi qua giữa 2 máy tính, nó chạy trên TCP
 
 + Chúng ta có HTTP message bao gồm : Header và Body, Header sẽ cung cấp thông tin về Body thông qua meta-data, máy nhận sẽ xử lý data nằm trong body như thế nào dựa vào Content-Type trong meta-data.
 
 + Chú ý rằng triển khai Websocket trên Client hoàn toàn khác với việc trển khai trên Server.
 khi chúng ta sử dụng WebsocketAPI trên client và Websocket/SocketIO ở giữa chúng 
+
+=> Sự khác biệt lớn nhất giữa HTTP và WebSocket ?
++ Server không thể bắn response về cho client trừ khi client tìm cách kết nối trước, nhưng đối với giao thức websocket điều này hoàn toàn có thể xảy ra.
++ Đối với HTTP ngay khi nhận được response thì Server thì sẽ bị ngắt kết nối, đối với giao thức websocket khi browser và server đã thiết lập kết nối xong kết nối này sẽ được duy trì cho đến khi 1 trong 2 bên browser hoặc server muốn ngắt kết nối.
+
+
+
+ => Phân biệt socket.io và websocket
+  SocketIO giúp chúng ta làm việc với Websocket dễ dàng hơn, có thể hiểu đơn giản Websocket như javascript và SocketIO như Jquery, Socket.io triển khai nhưng nhiều hàm tiện ích.
+  + Ở trong lần đầu tiên connect socket.io ở browser sẽ gửi request dựa trên http (polling) nhằm mục đích thăm dò, nó sẽ yêu cầu server upgrade giao thức lên websocket
+
+

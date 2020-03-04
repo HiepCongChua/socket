@@ -1,0 +1,2 @@
+* Namespace : namespace mặc định sẽ là '/' tức đây là namespace mặc định mà client kết nối và server mặc định lắng nghe, namespace dùng để giảm thiểu số lượng tài nguyên dùng để kêt nối TCP, tách biệt mối quan tâm vì server có thể gửi tin nhắn đến bất kì namespace nào mà không ảnh hưởng đến các namspace khác.
+* Room : Mỗi socket.io server sẽ có nhiều namespace và mỗi namespace sẽ có nhiều room,

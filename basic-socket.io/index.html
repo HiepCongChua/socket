@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js" ></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+ const socket = io("http://localhost:8080/");
+ console.log(socket);
+ socket.on("connect",data=>{
+     socket.on('welcome',message=>{
+         console.log(message);
+     });
+     socket.emit('message',message=>{
+         console.log(message);
+     });
+ })
+</script>
+</html>

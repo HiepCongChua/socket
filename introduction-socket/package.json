@@ -1,0 +1,25 @@
+{
+  "name": "socket",
+  "version": "1.0.0",
+  "description": "- Internet đơn giản chỉ là một mạng lưới giúp các máy tính có khả năng giao tiếp với nhau và các máy tính giao tiếp với nhau bằng các packet VD: Browser giao tiếp vs Server, Browser gửi và nhận dữ liệu đến server, dữ liệu ở dạng các packet, mỗi packet được chia ra làm 5 lớp theo thứ tự sau từ trên xuống dưới + Application + Transport => UDP/TCP:  + Network => IP + Link => wifi + Physical => cables Đây là các lớp tạo nên một gói tin (Packet) được gửi và nhận giữa client và server, 3 lớp transport,network, link kết hợp với nhau tạo thành bộ giao thức TCP/IP giúp cho 2 hay nhiều máy tính giao tiếp với nhau - Với tư cách là một developer thì chúng ta thường làm việc với lớp Application (HTTP,FTP,SSH,SMTP) - Giả sử chúng ta có một máy tính kết nối internet => như vậy lớp transport sẽ tạo ra 2^16 cổng trên máy tính của bạn, bất cứ khi nào bạn khởi động một ứng dụng (node chẳng hạn) bạn có thể chạy nó trên port 3000 tức là nó đã chạy trên tập các cổng này. Giả sử có một mô hình Client và Server, đứng ở Client sẽ ra sao nếu chúng ta muốn giao tiếp với một máy tính khác (server) qua cổng 80. Khi chúng ta ở Client (browser) browser cũng là một chương trình nó cũng sẽ mở một loạt các cổng trên máy tính để gửi và nhận dữ liệu, giả sử browser ở port 3000 trên máy tính, nó sẽ chuyển request đến lớp transport và request sẽ được gói gọn trong cái được gọi là segment, bên trong segement sẽ có thứ gọi là  + meta data + destination port + Source port",
+  "main": "justWsServer.js",
+  "scripts": {
+    "start": "nodemon justWsServer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HiepCongChua/socket.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HiepCongChua/socket/issues"
+  },
+  "homepage": "https://github.com/HiepCongChua/socket#readme",
+  "dependencies": {
+    "ws": "^7.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

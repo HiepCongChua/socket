@@ -9,7 +9,13 @@
     
 </body>
 <script>
-    const ws = new WebSocket();
+    const ws = new WebSocket("ws:localhost:8080");
     console.log(ws);
+    ws.onopen = event =>{
+        ws.send("I am so excited I am conneted! It is like chirismas");
+    }
+    ws.onmessage = event =>{
+        console.log(event);
+    }
 </script>
 </html>
