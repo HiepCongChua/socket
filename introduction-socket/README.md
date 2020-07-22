@@ -93,3 +93,19 @@ Websocket - Http
 - Nếu Socket.IO không thể thiết lập kết nối dựa trên Websocket thì nó sẽ chuyển qua Long Pooling trong khi nếu dùng Websocket thì không có phương án thứ 2.
 - Socket.IO cũng đóng vai trò là một cầu nối do websocket.api không được tích hợp sẵn trên môi trường Node nên Node không thể làm việc trực tiếp vs websocket (Node chỉ có thể tạo một kết nối socket) dó vậy cần một thư viên bên thứ 3 (Socket.IO)
 - Ban đầu khi sử dụng socket.io thì client sẽ khởi tạo kết nối kiểu polling, sau đó mới nâng cấp lên kết nối websocket
+
+=> Một số điều cần chú ý khi làm việc với thư viện socket.io
+
+- Ở phía server
+
+* khi viết const io = socket(server,{option}); tức là chúng ta đang đính kèm một máy chủ socket lên trên một máy chủ http nó sẽ theo truy cập trên máy chủ http và sẽ phụv vụ các kết nối kiểu ws.
+* Có một số option cần chú ý đó là path=true(default) và serverClient=true(default) điều này giúp cho client có tệp socket.io.js mà không cần dùng CDN
+* Theo mặc định transport=["polling","websocket"] tức là ở giai đoạn ban đầu sẽ chấp nhận poling sau đó dựa vào chất lượng kết nối sẽ upgrade lên websocket, điều này đúng với cả client và server => nếu muốn thiết lập kết nối có thể thêm hoặc bớt phần tử trong mảng=> nhớ là nếu set ở 1 phía thì sẽ phải set cả phía còn lại.
+* Namespace: có thể hiểu đơn giản namespace như một chatroom, nó là tập hợp của nhiều socket được kết nối trong với một số scope được xác định bằng path.
+
+- Namespace mặc định sẽ là '/' nếu chúng ta không thiết lập, sự kiện connection ở server chính là khi client đã được kết nối đến namespace mặc định.
+- Chú ý rằng sự kiện connection và connect đều là một.
+
+* Socket: Khi server lắng nghe được sự kiện connection (mặc định) nó sẽ invoked callback với đối số của callback là socket, hiểu đơn giản socket như một người quản trị phiên kết nối của client vs server, mỗi socket luôn thuộc về một namespce nhất định, Socket được kế thừa từ module EventEmitter.
+
+- Cứ sau 25s thì server sẽ bắn sự kiện ping về cho client để kiểm tra client có kết nối không, sau khi client nhận được sự kiện ping thì nó emit sự kiện pong về cho server, server sẽ bắn lại cho client để xác nhân nó nhận được sự kiện pong từ client

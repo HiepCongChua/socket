@@ -4,7 +4,7 @@
   "description": "",
   "main": "basics.js",
   "scripts": {
-    "start": "nodemon basics.js"
+    "start": "nodemon chat.js"
   },
   "author": "",
   "license": "ISC",
