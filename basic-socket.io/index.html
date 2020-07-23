@@ -10,13 +10,13 @@
     
 </body>
 <script>
- const socket = io("http://localhost:8080/");
- console.log(socket);
+ const socket = io("ws://localhost:8080/");
  socket.on("connect",data=>{
      socket.on('welcome',message=>{
          console.log(message);
      });
      socket.emit('message',message=>{
+         console.log('ok')
          console.log(message);
      });
  })
