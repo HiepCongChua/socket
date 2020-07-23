@@ -1,6 +1,7 @@
 const socket = io("http://localhost:3000")
 const socketAdmin = io("http://localhost:3000/admin")
 socket.on("messageFromServer", (dataFromServer) => {
+  console.log(dataFromServer)
   socket.emit("dataToServer", { data: "Data from the client" })
 })
 socket.on("connect", () => {
@@ -17,9 +18,6 @@ socket.on("messageToClient", (data) => {
   document.querySelector("#messages").innerHTML += `<li>
          ${data.text.text}
         </li>`
-})
-socket.on("joined", (msg) => {
-  console.log(msg)
 })
 document.querySelector("#message-form").addEventListener("submit", (event) => {
   event.preventDefault()
