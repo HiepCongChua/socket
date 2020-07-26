@@ -1,4 +1,9 @@
-const socket = io("http://localhost:3000");
+const username = prompt("What is your username");
+const socket = io("http://localhost:3000", {
+  query: {
+    username,
+  },
+});
 let nsSocket = "";
 socket.on("nsList", (nsData) => {
   let namespacesDiv = document.querySelector(".namespaces");
@@ -10,8 +15,9 @@ socket.on("nsList", (nsData) => {
     (element) => {
       element.addEventListener("click", (el) => {
         const nsEndpoint = element.getAttribute("ns");
+        joinNs(nsEndpoint);
       });
     }
   );
-  joinNs("wiki");
+  joinNs("/wiki");
 });

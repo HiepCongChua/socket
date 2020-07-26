@@ -1,5 +1,11 @@
 function joinNs(endpoint) {
-  nsSocket = io(`http://localhost:3000/${endpoint}`);
+  if (nsSocket) {
+    nsSocket.close();
+    document
+      .querySelector("#user-input")
+      .removeEventListener("submit", formSubmission);
+  }
+  nsSocket = io(`http://localhost:3000${endpoint}`);
   nsSocket.on("nsRoomLoad", (rooms) => {
     const roomList = document.querySelector(".room-list");
     roomList.innerHTML = "";
@@ -15,7 +21,8 @@ function joinNs(endpoint) {
       const roomNodes = document.getElementsByClassName("room");
       Array.from(roomNodes).forEach((el) => {
         el.addEventListener("click", (element) => {
-          console.log("Someone clicked on", element.target.innerText);
+          const roomName = element.target.innerText;
+          joinRoom(roomName);
         });
       });
       const topRoom = document.querySelector(".room");
@@ -29,11 +36,12 @@ function joinNs(endpoint) {
   });
   document
     .querySelector(".message-form")
-    .addEventListener("submit", (event) => {
-      event.preventDefault();
-      const newMessage = document.querySelector("#user-message").value;
-      nsSocket.emit("newMessageToServer", { text: newMessage });
-    });
+    .addEventListener("submit", formSubmission);
+}
+function formSubmission(event) {
+  event.preventDefault();
+  const newMessage = document.querySelector("#user-message").value;
+  nsSocket.emit("newMessageToServer", { text: newMessage });
 }
 
 function buildHTML(msg) {
@@ -43,7 +51,7 @@ function buildHTML(msg) {
     <img src="${msg.avatar}" />
   </div>
   <div class="user-message">
-    <div class="user-name-time">rbunch <span>${convertedDate}</span></div>
+    <div class="user-name-time">${msg.username}<span>${convertedDate}</span></div>
     <div class="message-text">${msg.text}</div>
   </div>
 </li>`;
