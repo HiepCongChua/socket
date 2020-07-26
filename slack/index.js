@@ -21,12 +21,14 @@ io.on("connection", (socket) => {
 // loop through each namespace and listen for a connection
 namespaces.forEach((namespace) => {
   io.of(namespace.endpoint).on("connection", (nsSocket) => {
+    // console.log(namespace.endpoint);
     nsSocket.emit("nsRoomLoad", namespaces[0].rooms);
     nsSocket.on("joinRoom", (roomJoin, numberOfUserCallback) => {
       nsSocket.join(roomJoin);
       io.of("/wiki")
         .in(roomJoin)
         .clients((err, clients) => {
+          console.log(clients);
           numberOfUserCallback(clients.length);
         });
     });
@@ -39,6 +41,7 @@ namespaces.forEach((namespace) => {
       };
       const roomTitle = Object.keys(nsSocket.rooms);
       io.of("/wiki").to(roomTitle).emit("messageToCliens", fullMsg);
+      //io.of("/wiki").to('New Articles').emit("messageToCliens", fullMsg);
     });
   });
 });

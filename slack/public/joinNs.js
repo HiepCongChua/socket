@@ -25,7 +25,7 @@ function joinNs(endpoint) {
   });
   nsSocket.on("messageToCliens", (msg) => {
     const newMsg = buildHTML(msg);
-    document.querySelector("#messages").innerHTML += msg;
+    document.querySelector("#messages").innerHTML += newMsg;
   });
   document
     .querySelector(".message-form")
@@ -43,8 +43,8 @@ function buildHTML(msg) {
     <img src="${msg.avatar}" />
   </div>
   <div class="user-message">
-    <div class="user-name-time">rbunch <span>${msg.time}</span></div>
-    <div class="message-text">${convertedDate}</div>
+    <div class="user-name-time">rbunch <span>${convertedDate}</span></div>
+    <div class="message-text">${msg.text}</div>
   </div>
 </li>`;
   return newHTML;
