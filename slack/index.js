@@ -28,7 +28,6 @@ namespaces.forEach((namespace) => {
       io.of("/wiki")
         .in(roomJoin)
         .clients((err, clients) => {
-          console.log(clients);
           numberOfUserCallback(clients.length);
         });
     });
@@ -39,9 +38,12 @@ namespaces.forEach((namespace) => {
         username: "hieple",
         avatar: "https://picsum.photos/id/237/200/300",
       };
-      const roomTitle = Object.keys(nsSocket.rooms);
+      const roomTitle = Object.keys(nsSocket.rooms)[1];
+      const nsRoom = namespaces[0].room.find((room) => {
+        return (room.roomTitle = roomTitle);
+      });
+      console.log(nsRoom);
       io.of("/wiki").to(roomTitle).emit("messageToCliens", fullMsg);
-      //io.of("/wiki").to('New Articles').emit("messageToCliens", fullMsg);
     });
   });
 });
